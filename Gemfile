@@ -53,3 +53,4 @@ group :development do
   # gem "spring"
 end
 
+gem 'bundler-audit', '~> 0.9.1'
