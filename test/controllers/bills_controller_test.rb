@@ -1,35 +1,35 @@
-require "test_helper"
+require 'test_helper'
 
 class BillsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @bill = bills(:one)
   end
 
-  test "should get index" do
+  test 'should get index' do
     get bills_url, as: :json
     assert_response :success
   end
 
-  test "should create bill" do
-    assert_difference("Bill.count") do
+  test 'should create bill' do
+    assert_difference('Bill.count') do
       post bills_url, params: { bill: { date: @bill.date, name: @bill.name } }, as: :json
     end
 
     assert_response :created
   end
 
-  test "should show bill" do
+  test 'should show bill' do
     get bill_url(@bill), as: :json
     assert_response :success
   end
 
-  test "should update bill" do
+  test 'should update bill' do
     patch bill_url(@bill), params: { bill: { date: @bill.date, name: @bill.name } }, as: :json
     assert_response :success
   end
 
-  test "should destroy bill" do
-    assert_difference("Bill.count", -1) do
+  test 'should destroy bill' do
+    assert_difference('Bill.count', -1) do
       delete bill_url(@bill), as: :json
     end
 
