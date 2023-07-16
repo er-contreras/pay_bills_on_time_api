@@ -32,7 +32,7 @@ It has a nice implementation where we can get notified by email when a bill is a
 
 #### Sign up
 
-```POST /api/v1/users```
+```POST /users```
 
 ##### Parameters
 
