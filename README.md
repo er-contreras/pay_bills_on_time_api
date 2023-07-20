@@ -10,7 +10,7 @@ It has a nice implementation where we can get notified by email when a bill is a
 - RSpec
 - Rubocop
 - Redis
-- Resque
+- Sidekiq
 
 ## How to use it
 
@@ -21,7 +21,7 @@ It has a nice implementation where we can get notified by email when a bill is a
 5. Run the migrations ```rails db:migrate```
 6. Run the server ```rails s```
 7. Run the redis server ```redis-server```
-8. Run the resque server ```QUEUE=* rake resque:work```
+8. Run the sidekiq server ```bundle exec sidekiq```
 9. Run the tests ```bundle exec rspec```
 10. Open the browser and go to ```http://localhost:3000/```
 11. Enjoy!
