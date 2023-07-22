@@ -34,3 +34,6 @@
 
 # Ignore .env file containing credentials.
 /.env
+
+# Ignore redis dump file.
+/dump.rdb
