@@ -3,4 +3,3 @@ class EmailJob
 
   def perform; end
 end
-
