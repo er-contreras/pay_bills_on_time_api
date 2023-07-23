@@ -248,6 +248,7 @@ DEPENDENCIES
   letter_opener
   pg (~> 1.1)
   puma (~> 5.0)
+  rack
   rack-cors
   rails (~> 7.0.4, >= 7.0.4.3)
   redis (~> 4.0)
