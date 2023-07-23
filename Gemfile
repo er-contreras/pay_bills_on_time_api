@@ -6,6 +6,7 @@ ruby '3.1.3'
 gem 'dotenv-rails', groups: %i[development test]
 gem 'jwt'
 gem 'letter_opener', group: :development
+gem 'rack'
 gem 'rubocop', '>= 1.0', '< 2.0'
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
