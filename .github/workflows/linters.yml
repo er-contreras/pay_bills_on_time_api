@@ -9,7 +9,7 @@ jobs:
   rubocop:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout out the code
         uses: actions/checkout@v3
       - name: Setup Ruby
         uses: actions/setup-ruby@v1
@@ -20,3 +20,5 @@ jobs:
           gem install --no-document rubocop -v '>= 1.0, < 2.0'
       - name: Rubocop Report
         run: rubocop --color
+      - name: Run unit tests
+        run: bundle exec rspec
