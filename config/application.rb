@@ -6,7 +6,7 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module TimeManagementBe
+module PayBillsOnTimeAPI
   class Application < Rails::Application
     config.active_job.queue_adapter = :sidekiq
     config.session_store :cookie_store, key: '_interslice_session'
