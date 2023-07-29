@@ -37,3 +37,6 @@
 
 # Ignore redis dump file.
 /dump.rdb
+
+# Ignore idea files
+.idea/
