@@ -8,6 +8,11 @@ class BillsController < ApplicationController
     render json: @bills
   end
 
+  def user_bills
+    @user_bills = Bill.where(user_id: params[:user_id])
+    render json: @user_bills
+  end
+
   # GET /bills/1
   def show
     render json: @bill

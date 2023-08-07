@@ -8,5 +8,7 @@ Rails.application.routes.draw do
   resources :users
   resources :bills
 
+  get '/user_bills/:user_id', to: 'bills#user_bills'
+
   post '/auth/login', to: 'authentication#login'
 end
