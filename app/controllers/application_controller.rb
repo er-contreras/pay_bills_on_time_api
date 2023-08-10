@@ -9,6 +9,7 @@ class ApplicationController < ActionController::API
     header = request.headers['HTTP_AUTHORIZATION']
     header = header.split.last if header
     decoded = jwt_decode(header)
-    @current_user = User.find(decoded[:user_id])
+    @current_user = decoded ? User.find(decoded[:user_id]) : nil
+    head :unauthorized unless @current_user
   end
 end
