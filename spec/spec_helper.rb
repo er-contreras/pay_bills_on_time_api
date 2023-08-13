@@ -90,3 +90,11 @@ RSpec.configure do |config|
   #   # as the one that triggered the failure.
   #   Kernel.srand config.seed
 end
+
+require 'rspec-sidekiq'
+
+RSpec::Sidekiq.configure do |config|
+  config.clear_all_enqueued_jobs = true # default => true
+  config.enable_terminal_colours = true # default => true
+  config.warn_when_jobs_not_processed_by_sidekiq = true # default => true
+end
