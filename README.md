@@ -58,3 +58,7 @@ It has a nice implementation where we can get notified by email when a bill is a
   }
 }
 ```
+
+## Example when a job was scheduled for the next day.
+![Screenshot 2023-08-14 at 19 23 40](https://github.com/er-contreras/pay_bills_on_time_api/assets/67211919/088e5640-8a6f-490e-ba4e-3cc0861a5645)
+
