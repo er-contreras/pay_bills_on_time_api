@@ -7,7 +7,9 @@ class AuthenticationController < ApplicationController
 
     if verified_user_password
       user_token = jwt_encode(user_id: @user.id)
-      render json: { user: { id: @user.id, username: @user.username }, token: user_token }, status: :ok
+      render json: {
+        user: { id: @user.id, username: @user.username, email: @user.email }, token: user_token
+      }, status: :ok
     else
       render json: { error: 'unauthorized' }, status: :unauthorized
     end
