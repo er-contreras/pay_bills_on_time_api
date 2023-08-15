@@ -23,7 +23,7 @@ It has a nice implementation where we can get notified by email when a bill is a
 7. Run the redis server ```redis-server```
 8. Run the sidekiq server ```bundle exec sidekiq```
 9. Run the tests ```bundle exec rspec```
-10. Open the browser and go to ```http://localhost:3000/```
+10. Open the browser and go to sidekiq UI ```http://localhost:3000/sidekiq```
 11. Enjoy!
 
 ## API Documentation
