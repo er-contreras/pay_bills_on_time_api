@@ -10,6 +10,21 @@ class BillsController < ApplicationController
 
   def user_bills
     @user_bills = Bill.where(user_id: params[:user_id])
+
+
+    # Iterate over each bill
+    @user_bills.each do |bill|
+      deadline_date = Date.strptime(bill.date, '%d/%m/%Y')
+
+      next unless deadline_date < Date.current
+
+      # Calculate the new deadline date
+      new_deadline_date = deadline_date.advance(months: 1)
+
+      # Update the bill's deadline date
+      bill.update(date: new_deadline_date.strftime('%d/%m/%Y'))
+    end
+
     render json: @user_bills
   end
 
