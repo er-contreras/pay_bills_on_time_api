@@ -7,8 +7,10 @@ class BillNotificationController < ApplicationController
       # Toggle the bill_notification column
       BillNotification.find_by(bill_id: bill.id).toggle(:notification).save
 
+      status = BillNotification.find_by(bill_id: bill.id).notification
+
       render json: {
-        message: "Bill notifications are now for #{bill_name}"
+        message: "Bill notifications are now #{status == true ? 'enabled' : 'disabled'} for #{bill_name}"
       }
     else
       render json: {
