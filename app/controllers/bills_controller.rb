@@ -30,6 +30,7 @@ class BillsController < ApplicationController
     @bill = Bill.new(bill_params)
 
     if @bill.save
+      BillNotification.create(bill_id: @bill.id)
       render json: @bill, status: :created, location: @bill
     else
       render json: @bill.errors, status: :unprocessable_entity
