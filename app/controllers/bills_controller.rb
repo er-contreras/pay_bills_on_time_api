@@ -19,7 +19,8 @@ class BillsController < ApplicationController
       bill.update(date: new_deadline_date.strftime('%d/%m/%Y'))
     end
 
-    render json: @user_bills
+    # render json: @user_bills by order of date
+    render json: @user_bills.sort_by { |bill| Date.strptime(bill.date, '%d/%m/%Y') }
   end
 
   def show
