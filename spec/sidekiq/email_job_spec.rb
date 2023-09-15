@@ -3,64 +3,37 @@ require 'sidekiq/testing'
 Sidekiq::Testing.fake!
 
 RSpec.describe EmailJob, type: :job do
-  # include ActiveJob::TestHelper
-  let(:email) { 'johndoe@gmail.com' }
-  let(:date) { '24/07/2023' }
-
   describe '#perform' do
-    it 'assert that jobs were pushed on to the queue' do
-      expect { EmailJob.perform_async(email, date) }.to change(EmailJob.jobs, :size).by(1)
+    it 'sends monthly bill notifications for bills with notification on the current date' do
+      # Create a sample user and a bill with notification for the current date
+      user = create(:user)
+      bill = create(:bill, user: user, date: Date.today)
+      create(:bill_notification, bill: bill, notification: true)
+
+      # Ensure that the mailer is expected to receive :deliver_later
+      allow(MonthlyBillNotificationMailer).to receive(:monthly_bill_notification).and_return(double('Mailer', deliver_later: true))
+
+      # Perform the job
+      EmailJob.new.perform
+
+      # Expect the mailer to have been called once
+      expect(MonthlyBillNotificationMailer).to have_received(:monthly_bill_notification).once.with(user.email, Date.today)
     end
 
-    it 'perform method should be enqueue after receiving parameters' do
-      EmailJob.perform_async(email, date)
-      expect(EmailJob).to have_enqueued_sidekiq_job(email, date)
-    end
+    it 'does not send notifications for bills with notification turned off' do
+      # Create a sample user and a bill without notification for the current date
+      user = create(:user)
+      bill = create(:bill, user: user, date: Date.today)
+      create(:bill_notification, bill: bill, notification: false)
 
-    it 'execute all queued jobs by draining the queue' do
-      EmailJob.perform_async(email, date)
-      expect(EmailJob.jobs.size).to eq(1)
-      Sidekiq::Worker.drain_all
-      expect(EmailJob.jobs.size).to eq(0)
-    end
+      # Ensure that the mailer is not expected to receive :deliver_later
+      allow(MonthlyBillNotificationMailer).to receive(:monthly_bill_notification)
 
-    context 'sends notification email to the user' do
-      before do
-        travel_to Time.new(2023, 7, 24)
-      end
+      # Perform the job
+      EmailJob.new.perform
 
-      after do
-        travel_back
-      end
-
-      it 'the day of the deadline' do
-        EmailJob.perform_async(email, date)
-        expect(EmailJob.jobs.size).to eq(1)
-
-        Sidekiq::Worker.drain_all
-
-        # Assert that the email was delivered
-        expect(ActionMailer::Base.deliveries.count).to eq(1)
-        expect(ActionMailer::Base.deliveries.last.to[0]).to eq(email)
-
-        # Move time forward to the next month
-        travel 1.month
-
-        EmailJob.perform_async(email, date)
-        expect(EmailJob.jobs.size).to eq(1)
-
-        Sidekiq::Worker.drain_all
-
-        # Assert that the email was delivered for the next month
-        expect(ActionMailer::Base.deliveries.count).to eq(2)
-        expect(ActionMailer::Base.deliveries.last.to[0]).to eq(email)
-
-        # Continue this pattern for subsequent months if needed
-        # ...
-
-        # Reset the time after all tests
-        travel_back
-      end
+      # Expect the mailer to not have been called
+      expect(MonthlyBillNotificationMailer).not_to have_received(:monthly_bill_notification)
     end
   end
 end
