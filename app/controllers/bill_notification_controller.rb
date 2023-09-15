@@ -10,7 +10,8 @@ class BillNotificationController < ApplicationController
       status = BillNotification.find_by(bill_id: bill.id).notification
 
       render json: {
-        message: "Bill notifications are now #{status == true ? 'enabled' : 'disabled'} for #{bill_name}"
+        message: "Bill notifications are now #{status == true ? 'enabled' : 'disabled'} for #{bill_name}",
+        bill_notification_state: status
       }
     else
       render json: {
