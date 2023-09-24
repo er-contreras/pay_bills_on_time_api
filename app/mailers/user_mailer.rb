@@ -5,10 +5,4 @@ class UserMailer < ApplicationMailer
 
     mail(to: @user.email, subject: 'Welcome to My Awesome Site')
   end
-
-  private
-
-  def user_params
-    @user = User.find(params[:user])
-  end
 end
