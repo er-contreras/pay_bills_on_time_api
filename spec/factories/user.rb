@@ -18,6 +18,6 @@ FactoryBot.define do
 
   factory :bill_notification do
     association :bill
-    notification { true }
+    notification { false }
   end
 end
