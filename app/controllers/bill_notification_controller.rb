@@ -1,16 +1,18 @@
 class BillNotificationController < ApplicationController
+  skip_before_action :authenticate_user, only: [:create]
+
   def create
     bill_name = bill_notification_params[:name]
-    bill = Bill.find(bill_notification_params[:id])
+    bill_id = Bill.find(bill_notification_params[:id].to_i)
 
-    if bill
-      # Toggle the bill_notification column
-      BillNotification.find_by(bill_id: bill.id).toggle(:notification).save
+    if bill_id
+      bill_notification = BillNotification.find_by(bill_id: bill_id.id)
+      bill_notification.toggle(:notification).save
 
-      status = BillNotification.find_by(bill_id: bill.id).notification
+      status = bill_notification.notification
 
       render json: {
-        message: "Bill notifications are now #{status == true ? 'enabled' : 'disabled'} for #{bill_name}",
+        message: "Bill notifications are now #{status ? 'enabled' : 'disabled'} for #{bill_name}",
         bill_notification_state: status
       }
     else
