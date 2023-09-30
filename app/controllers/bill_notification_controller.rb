@@ -1,4 +1,6 @@
 class BillNotificationController < ApplicationController
+  skip_before_action :authenticate_user, only: [:create]
+
   def create
     bill_name = bill_notification_params[:name]
     bill = Bill.find(bill_notification_params[:id])
