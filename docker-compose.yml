@@ -16,6 +16,7 @@ services:
       - .env
     depends_on:
       - postgres
+#      - redis
 
   postgres:
     image: postgres:latest
@@ -28,6 +29,25 @@ services:
       - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
+
+#  redis:
+#    image: redis:latest
+#    container_name: redis_container
+#    ports:
+#      - "6379:6379"
+#    command: redis-server --bind 0.0.0.0
+#
+#  sidekiq:
+#    build: .
+#    command: bundle exec sidekiq
+#    volumes:
+#      - .:/app
+#      - bundle-volume:/usr/local/bundle
+#    env_file:
+#      - .env
+#    depends_on:
+#      - redis
+#      - postgres
 
 volumes:
   bundle-volume:

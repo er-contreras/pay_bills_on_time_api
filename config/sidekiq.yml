@@ -1,8 +1,11 @@
-:concurrency: 5
-:queues:
-  - default
-:scheduler:
-  :schedule:
-    email_job:
-      every: 1 day
-      class: EmailJob
+:development:
+  :concurrency: 5
+  :queues:
+    - default
+#  :redis:
+#    :url: redis://host.docker.internal:6379/0
+  :scheduler:
+    :schedule:
+      email_job:
+        every: 1 day
+        class: EmailJob
